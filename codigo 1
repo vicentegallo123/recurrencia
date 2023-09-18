@@ -1,0 +1,28 @@
+#include <iostream>
+#include <random>  // Biblioteca para generar números aleatorios
+#include <array>   // Biblioteca para trabajar con arrays
+
+int main() {
+    // Configurar el generador de números aleatorios
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> distribucion(1, 6);  // Rango: [1, 6]
+
+    // Definir un array para contar las ocurrencias de cada número
+    std::array<int, 6> conteo = {0, 0, 0, 0, 0, 0};
+    int lanzamientos = 100;
+
+    // Simular el lanzamiento del dado 100 veces
+    for (int i = 0; i < lanzamientos; ++i) {
+        int resultado = distribucion(gen);
+        conteo[resultado - 1]++;  // Restamos 1 para ajustar al índice del array
+    }
+
+    // Calcular y mostrar los resultados en porcentajes
+    for (int i = 0; i < 6; ++i) {
+        double porcentaje = (static_cast<double>(conteo[i]) / lanzamientos) * 100.0;
+        std::cout << "El número " << (i + 1) << " cayó en " << porcentaje << "% de las veces." << std::endl;
+    }
+
+    return 0;
+}
